@@ -1,2 +1,2 @@
-# dynamodb
-A Graceful Client for AWS DynamoDB
+# Graphite-Core
+The Core of Graphite, A More Graceful Client for AWS DynamoDB
