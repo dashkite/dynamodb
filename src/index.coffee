@@ -1,6 +1,7 @@
 import { DynamoDB } from "@aws-sdk/client-dynamodb"
 import buildMetal from "./metal"
 import buildBasic from "./basic"
+import buildEdge from "./edge"
 
 graphiteCore = (options) ->
   { table, aws } = options
@@ -12,7 +13,8 @@ graphiteCore = (options) ->
 
   metal = buildMetal context
   basic = buildBasic metal, context
+  edge = buildEdge basic
 
-  { metal, basic }
+  { metal, basic, edge }
 
 export default graphiteCore

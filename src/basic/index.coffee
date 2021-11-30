@@ -7,16 +7,16 @@ Basic = (metal, context) ->
   (model) ->
     { mapKey, wrap, unwrap } = buildMapping model
 
-    get: (key) ->
-      { Item } = await metal.get mapKey key
+    get: (key, options) ->
+      { Item } = await metal.get ( mapKey key ), options
       if Item? then unwrap Item else undefined
       
     put: (data) -> 
-      await metal.put wrap data
+      await metal.put ( wrap data ), options
       data
     
-    delete: (key) ->
-      await metal.delete mapKey key
+    delete: (key, options) ->
+      await metal.delete ( mapKey key ), options
       undefined
       
     query: (options) -> 

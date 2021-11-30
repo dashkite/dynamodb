@@ -7,57 +7,61 @@ Resources:
     DeletionPolicy: Retain
     Properties:
       TableName: graphite-library-test
-      KeySchema:
-        - AttributeName: origin
-          KeyType: HASH
-        - AttributeName: typeTarget
-          KeyType: RANGE
+      BillingMode: PAY_PER_REQUEST
       AttributeDefinitions:
         - AttributeName: origin
           AttributeType: S
         - AttributeName: target
           AttributeType: S
-        - AttributeName: typeOrigin
+        - AttributeName: edgeOrigin
           AttributeType: S
-        - AttributeName: typeTarget
+        - AttributeName: edgeTarget
           AttributeType: S
         - AttributeName: secondary
           AttributeType: S
-      BillingMode: PAY_PER_REQUEST
+
+      # "OutByPrimary" via Table Key
+      KeySchema:
+        - AttributeName: origin
+          KeyType: HASH
+        - AttributeName: edgeTarget
+          KeyType: RANGE
+
       GlobalSecondaryIndexes:
+
         - IndexName: InByPrimary
           KeySchema:
             - AttributeName: target
               KeyType: HASH
-            - AttributeName: typeOrigin
+            - AttributeName: edgeOrigin
               KeyType: RANGE
           Projection:
             ProjectionType: INCLUDE
             NonKeyAttributes:
-              - secondary
               - stash
+
         - IndexName: OutBySecondary
           KeySchema:
-            - AttributeName: typeOrigin
+            - AttributeName: origin
               KeyType: HASH
-            - AttributeName: secondary
+            - AttributeName: edgeSecondary
               KeyType: RANGE
           Projection:
             ProjectionType: INCLUDE
             NonKeyAttributes:
-              - target
               - stash
+
         - IndexName: InBySecondary
           KeySchema:
-            - AttributeName: typeTarget
+            - AttributeName: target
               KeyType: HASH
-            - AttributeName: secondary
+            - AttributeName: edgeSecondary
               KeyType: RANGE
           Projection:
             ProjectionType: INCLUDE
             NonKeyAttributes:
-              - origin
               - stash
+
       TimeToLiveSpecification:
         AttributeName: expiresAt
         Enabled: true

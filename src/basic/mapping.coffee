@@ -3,8 +3,8 @@ import { unwrap as _unwrap, wrap as _wrap } from "../mapping"
 
 buildMapping = (model) ->
   mapping = 
-    wrap: _wrap model.types
-    unwrap: _unwrap model.types
+    wrap: _wrap model.properties
+    unwrap: _unwrap model.properties
     mapKey: (data) ->
       # Map the "basic" model to DynamoDB's partition + sort indexing model.
       [ partition, sort ] = model.key

@@ -64,9 +64,13 @@ queryCombinators = ({ wrap }) ->
 
 
 
-    applyPartition() if context.partition?
-    applySort() if context.sort?
-    applyProjection() if context.include?
+    if context.partition?
+      applyPartition()
+      if context.sort?
+        applySort()
+    
+    if context.include? 
+      applyProjection() 
 
     if ! isEmpty _expression
       context.query.KeyConditionExpression = _expression
