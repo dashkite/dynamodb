@@ -55,6 +55,8 @@ queryCombinators = ({ wrap }) ->
           _expression += "begins_with ( #{key}, #{object} ) "
         when "between"
           _expression += "#{key} BETWEEN #{object} AND #{subValue object2}"
+        when "contains"
+          _expression += "contains ( #{key}, #{object} )"
         else
           throw new Error "unsupported sort expression [#{type}]"
 

@@ -11,7 +11,7 @@ Basic = (metal, context) ->
       { Item } = await metal.get ( mapKey key ), options
       if Item? then unwrap Item else undefined
       
-    put: (data) -> 
+    put: (data, options) -> 
       await metal.put ( wrap data ), options
       data
     
